@@ -13,4 +13,11 @@ const renderTickets = () => {
 
 }
 
+const counterTickets = () => {
+  const conteo = document.getElementById('conteo__cifra')
+  const waiting = listTurn.filter(item => item.statusClass === 'waiting')
+  conteo.innerHTML = waiting.length
+}
+
 renderTickets()
+counterTickets()
