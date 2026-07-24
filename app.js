@@ -34,13 +34,33 @@ const renderTickets = () => {
       handleCancel(id)
     }
   })
+
+  renderCounterTickets()
+  renderWaitingCall()
 }
 
-const counterTickets = () => {
+const renderCounterTickets = () => {
   const conteo = document.getElementById('conteo__cifra')
   const waiting = listTurn.filter(item => item.statusClass === 'waiting')
   conteo.innerHTML = waiting.length
 }
 
+const renderCurrentTicket = () => {
+  const ticketInProgress = listTurn.find(ticket => ticket.statusClass === 'inProgress')
+
+  if (!ticketInProgress) return
+
+  const currentTicket = document.getElementById('visor__numero')
+  currentTicket.innerHTML = ticketInProgress.id
+}
+
+const renderWaitingCall = () => {
+  const nextTicket = listTurn.find(ticket => ticket.statusClass === 'waiting')
+  const waiting = document.getElementById('waiting')
+  waiting.innerHTML = nextTicket ? nextTicket.id : '-'
+}
+
 renderTickets()
-counterTickets()
+renderCounterTickets()
+renderCurrentTicket()
+renderWaitingCall()
