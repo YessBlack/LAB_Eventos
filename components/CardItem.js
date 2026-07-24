@@ -15,8 +15,7 @@ export const CardItem = (item) => {
         <div class="ticketStatus ${item.statusClass}">
           <span class="statusLabel">${item.status}</span>
         </div>
-<button class="ticketBtn" ${showCancel ? '' : 'style="visibility: hidden"'}>Cancelar</button>        
-      </div>
+        <button data-id="${item.id}" class="ticketBtn" ${showCancel ? '' : 'style="visibility: hidden"'}>Cancelar</button>      </div>
     </article>
   `
 }
