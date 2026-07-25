@@ -1,8 +1,8 @@
-export const CardItem = (item) => {
-  const showCancel = item.statusClass === 'waiting'
+export const CardItem = (item, showButtonCancel = true) => {
+  const showCancel = item.statusClass === 'waiting' && showButtonCancel
 
   return `
-    <article class="ticket">
+    <article class="ticket ${!showButtonCancel ? 'border' : ''}">
       <div class="ticketHeader">
         <p class="ticketCode">${item.id}</p>
         <div class="ticketInfo">
@@ -15,7 +15,10 @@ export const CardItem = (item) => {
         <div class="ticketStatus ${item.statusClass}">
           <span class="statusLabel">${item.status}</span>
         </div>
-        <button data-id="${item.id}" class="ticketBtn" ${showCancel ? '' : 'style="visibility: hidden"'}>Cancelar</button>      </div>
+        ${showButtonCancel
+      ? `<button data-id="${item.id}" class="ticketBtn" ${showCancel ? '' : 'style="visibility: hidden"'}>Cancelar</button>`
+      : ''
+    }
     </article>
   `
 }
