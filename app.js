@@ -19,12 +19,14 @@ const handleCancel = (id) => {
 }
 
 const handleAdd = () => {
-  const index = listTurn.findIndex(ticket => ticket.id === id)
+  const item = listTurn.find(ticket => ticket.statusClass === 'waiting')
 
-  if (index === -1) {
-    alert('Algo salio mal')
+  if (!item) {
+    alert('No hay más turnos pendientes')
     return
   }
+
+  const index = listTurn.findIndex(ticket => ticket.id === item.id)
 
   const ticketEnded = listTurn.find(ticket => ticket.statusClass === 'inProgress')
 
@@ -53,15 +55,10 @@ const handleAdd = () => {
   renderWaitingCall()
   renderCurrentTicket()
   renderCounterTickets()
-
-  // Limpiamos la búsqueda tras agregar
-  const inputSearch = document.querySelector('.panel__input')
-  const sectionResults = document.querySelector('.results')
-  inputSearch.value = ''
-  sectionResults.innerHTML = ''
 }
 
 const ticketList = document.getElementById('fila__lista')
+const btnLlamar = document.getElementById('btnLlamar')
 
 ticketList.addEventListener('click', (event) => {
   if (event.target.classList.contains('ticketBtn')) {
@@ -69,6 +66,8 @@ ticketList.addEventListener('click', (event) => {
     handleCancel(id)
   }
 })
+
+btnLlamar.addEventListener('click', () => handleAdd())
 
 const renderTickets = () => {
   const ticketList = document.getElementById('fila__lista')
@@ -117,8 +116,7 @@ const renderSearch = () => {
 
     const searchElements = listTurn.filter(ticket => {
       const idMatch = String(ticket.id).toLowerCase().includes(value.toLowerCase())
-      const isWaiting = ticket.statusClass === 'waiting'
-      return idMatch && isWaiting
+      return idMatch
     })
 
     sectionResults.classList.add('results--visible')
